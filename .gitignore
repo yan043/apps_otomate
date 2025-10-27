@@ -16,13 +16,13 @@
 /.phpunit.result.cache
 
 # Storage
-# storage/
-# !storage/app/public/
-# public/storage
-# public/upload_*
-# bootstrap/cache/
-# storage/*.key
-# storage/pail
+storage/
+!storage/app/public/
+public/storage
+public/upload_*
+bootstrap/cache/
+storage/*.key
+storage/pail
 
 # IDE & editor folders
 .idea/
