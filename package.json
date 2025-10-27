@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite",
+        "format:php": "php vendor/bin/pint",
+        "format:blade": "blade-formatter --write \"resources/views/**/*.blade.php\"",
+        "format:js": "eslint resources/js --fix",
+        "format": "npm run format:php && npm run format:blade && npm run format:js"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.35.0",
+        "@shufo/prettier-plugin-blade": "^1.16.1",
+        "@tailwindcss/vite": "^4.0.0",
+        "autoprefixer": "^10.4.20",
+        "axios": "^1.11.0",
+        "blade-formatter": "^1.44.2",
+        "concurrently": "^9.0.1",
+        "eslint": "^9.35.0",
+        "eslint-config-prettier": "^10.1.8",
+        "laravel-vite-plugin": "^2.0.0",
+        "postcss": "^8.4.47",
+        "prettier": "^3.6.2",
+        "prettier-plugin-blade": "^2.1.21",
+        "tailwindcss": "^4.0.0",
+        "vite": "^7.0.4"
+    }
+}
