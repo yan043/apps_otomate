@@ -69,9 +69,11 @@ class TelegramController extends Controller
             'inline_keyboard' => [
                 [
                     ['text' => 'Start', 'callback_data' => '/start'],
-                    ['text' => 'Clock', 'callback_data' => '/clock'],
+                    ['text' => 'Clock', 'callback_data' => '/clock']
+                ],
+                [
                     ['text' => 'Chat ID', 'callback_data' => '/chat_id'],
-                    ['text' => 'Search', 'callback_data' => '/search'],
+                    ['text' => 'Search Site', 'callback_data' => '/search_site']
                 ],
             ],
         ];
@@ -325,14 +327,49 @@ class TelegramController extends Controller
 
     private static function getUserState($chat_id)
     {
+        $file = storage_path("app/user_state_$chat_id.json");
+        try
+        {
+            if (file_exists($file))
+            {
+                return json_decode(file_get_contents($file), true);
+            }
+        }
+        catch (\Exception $e)
+        {
+            //
+        }
+
+        return null;
     }
 
     private static function setUserState($chat_id, $data)
     {
+        $file = storage_path("app/user_state_$chat_id.json");
+        try
+        {
+            file_put_contents($file, json_encode($data));
+        }
+        catch (\Exception $e)
+        {
+            //
+        }
     }
 
     private static function clearUserState($chat_id)
     {
+        $file = storage_path("app/user_state_$chat_id.json");
+        try
+        {
+            if (file_exists($file))
+            {
+                unlink($file);
+            }
+        }
+        catch (\Exception $e)
+        {
+            //
+        }
     }
 
     private static function getChatTitle($chat)
