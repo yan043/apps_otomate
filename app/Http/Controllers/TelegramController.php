@@ -366,6 +366,17 @@ class TelegramController extends Controller
             $message[5] .= "Last Update    : " . ($data->last_update ?? 'N/A') . "\n";
             $message[5] .= "</code>";
 
+            if (
+                !empty($data->site_lat_ne) && !empty($data->site_long_ne) &&
+                $data->site_lat_ne !== 'N/A' && $data->site_long_ne !== 'N/A'
+            )
+            {
+                $message['location'] = [
+                    'latitude' => $data->site_lat_ne,
+                    'longitude' => $data->site_long_ne
+                ];
+            }
+
             return $message;
         }
         catch (Exception $e)
@@ -383,6 +394,11 @@ class TelegramController extends Controller
             {
                 foreach ($message as $index => $msg)
                 {
+                    if ($index === 'location')
+                    {
+                        continue;
+                    }
+
                     if ($thread_id)
                     {
                         TelegramModel::sendMessageReplyThread($tokenBot, $chat_id, $thread_id, $msg, $messageID);
@@ -391,6 +407,14 @@ class TelegramController extends Controller
                     {
                         TelegramModel::sendMessageReply($tokenBot, $chat_id, $msg, $messageID);
                     }
+                    usleep(100000);
+                }
+
+                if (isset($message['location']))
+                {
+                    $latitude = $message['location']['latitude'];
+                    $longitude = $message['location']['longitude'];
+                    TelegramModel::sendLocation($tokenBot, $chat_id, $latitude, $longitude);
                     usleep(100000);
                 }
 
